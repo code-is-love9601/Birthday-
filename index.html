@@ -1,0 +1,593 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOLDI.exe | Birthday Mode</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@400;600;700&display=swap');
+
+:root {
+  --pink: #ff1493;
+  --cyan: #00f7ff;
+  --purple: #a100ff;
+  --bg: #05020b;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: white;
+  font-family: 'Rajdhani', sans-serif;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background:
+    radial-gradient(ellipse at 20% 20%, #5c004c55, transparent 45%),
+    radial-gradient(ellipse at 80% 80%, #001b7755, transparent 45%),
+    #05020b;
+}
+
+#stars, #particles {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#stars { z-index: -2; }
+#particles { z-index: 5; }
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  opacity: .13;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    #000 4px
+  );
+}
+
+.topbar {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #05020bd9;
+  border-bottom: 1px solid #ff149344;
+  backdrop-filter: blur(12px);
+}
+
+.logo {
+  font-family: Orbitron, sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--cyan);
+  text-shadow: 0 0 12px var(--cyan);
+}
+
+.music-btn, .btn {
+  border: 1px solid var(--pink);
+  color: white;
+  background: #ff14931b;
+  padding: 12px 18px;
+  font: 700 13px Orbitron, sans-serif;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: .25s;
+}
+
+.music-btn:hover, .btn:hover {
+  background: var(--pink);
+  box-shadow: 0 0 25px var(--pink);
+  transform: translateY(-2px);
+}
+
+.scene {
+  display: none;
+  min-height: 100svh;
+  padding: 100px 18px 45px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.scene.active {
+  display: flex;
+  animation: sceneIn .65s ease both;
+}
+
+@keyframes sceneIn {
+  from { opacity: 0; transform: scale(.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.content {
+  width: 100%;
+  max-width: 720px;
+  margin: auto;
+}
+
+.eyebrow {
+  color: var(--cyan);
+  font: 11px Orbitron, sans-serif;
+  letter-spacing: 4px;
+  text-shadow: 0 0 12px var(--cyan);
+}
+
+h1, h2 {
+  font-family: Orbitron, sans-serif;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  font-size: clamp(38px, 11vw, 88px);
+  font-weight: 900;
+  line-height: 1.12;
+  margin: 25px 0;
+  color: white;
+  text-shadow:
+    0 0 5px #fff,
+    0 0 15px var(--pink),
+    0 0 35px var(--pink),
+    0 0 65px var(--purple);
+  animation: neonFlicker 3s infinite;
+}
+
+@keyframes neonFlicker {
+  0%, 18%, 20%, 22%, 60%, 62%, 100% {
+    opacity: 1;
+    filter: brightness(1.15);
+  }
+  19%, 21%, 61% {
+    opacity: .72;
+    filter: brightness(.7);
+  }
+  65% {
+    text-shadow: 4px 0 var(--cyan), -4px 0 var(--pink);
+  }
+  66% {
+    text-shadow: 0 0 20px var(--pink);
+  }
+}
+
+.glitch {
+  position: relative;
+  animation: glitch 4s infinite;
+}
+
+@keyframes glitch {
+  0%, 92%, 100% { transform: translateX(0); }
+  93% { transform: translateX(-3px); }
+  94% { transform: translateX(3px); }
+  95% { transform: translateX(-2px); }
+  96% { transform: translateX(0); }
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, var(--cyan), white, var(--pink));
+  background-size: 250%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientMove 3s linear infinite;
+}
+
+@keyframes gradientMove {
+  to { background-position: 250% center; }
+}
+
+.subtitle {
+  font-size: 19px;
+  color: #d9cfe9;
+  letter-spacing: 1px;
+  line-height: 1.7;
+}
+
+.neon-line {
+  width: min(260px, 70%);
+  height: 2px;
+  margin: 25px auto;
+  background: linear-gradient(90deg, transparent, var(--cyan), var(--pink), transparent);
+  box-shadow: 0 0 18px var(--pink);
+}
+
+.btn {
+  margin: 8px 5px;
+  min-width: 155px;
+}
+
+.btn-cyan {
+  border-color: var(--cyan);
+  background: #00f7ff12;
+}
+
+.btn-cyan:hover {
+  background: var(--cyan);
+  color: #05020b;
+  box-shadow: 0 0 25px var(--cyan);
+}
+
+.photo-frame {
+  width: min(68vw, 270px);
+  height: min(68vw, 270px);
+  margin: 25px auto;
+  padding: 5px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--pink), var(--purple));
+  box-shadow: 0 0 20px var(--pink), 0 0 55px #a100ff66;
+  animation: photoPulse 2s infinite alternate;
+}
+
+@keyframes photoPulse {
+  to { box-shadow: 0 0 35px var(--cyan), 0 0 65px var(--pink); }
+}
+
+.photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #100716;
+}
+
+.cake {
+  font-size: 85px;
+  display: block;
+  margin: 20px auto;
+  filter: drop-shadow(0 0 20px var(--pink));
+  animation: cakeFloat 2s ease-in-out infinite;
+}
+
+@keyframes cakeFloat {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-12px) rotate(2deg); }
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 25px 0;
+}
+
+.photo-slot {
+  min-width: 0;
+  aspect-ratio: 3 / 4;
+  border: 1px dashed var(--cyan);
+  background: #00f7ff08;
+  box-shadow: inset 0 0 15px #00f7ff12;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  color: var(--cyan);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.photo-slot img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-slot input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.message-box {
+  border: 1px solid #ff149366;
+  background: #ff14930b;
+  padding: 22px;
+  margin: 25px auto;
+  box-shadow: 0 0 25px #ff149311;
+}
+
+.heart {
+  position: fixed;
+  bottom: -40px;
+  pointer-events: none;
+  animation: floatHeart linear forwards;
+  z-index: 6;
+}
+
+@keyframes floatHeart {
+  0% { transform: translateY(0) rotate(0); opacity: 0; }
+  15% { opacity: .9; }
+  100% { transform: translateY(-110vh) rotate(300deg); opacity: 0; }
+}
+
+.small {
+  color: #a99bb9;
+  font-size: 12px;
+}
+
+.footer {
+  margin-top: 25px;
+  font: 10px Orbitron, sans-serif;
+  letter-spacing: 2px;
+  color: #7d6a8b;
+}
+
+@media(max-width:400px) {
+  .topbar { padding: 12px; }
+  .logo { font-size: 10px; }
+  .music-btn { padding: 10px; font-size: 10px; }
+  .photo-grid { gap: 6px; }
+}
+</style>
+</head>
+
+<body>
+<canvas id="stars"></canvas>
+<canvas id="particles"></canvas>
+<div class="scanlines"></div>
+
+<header class="topbar">
+  <div class="logo">GOLDI.exe <span style="color:#ff1493">///</span></div>
+  <button class="music-btn" id="musicBtn" onclick="toggleMusic()">♫ START BEAT</button>
+</header>
+
+<!-- SCENE 1 -->
+<section class="scene active" id="intro">
+  <div class="content">
+    <div class="eyebrow">SYSTEM INITIALIZED // 001</div>
+    <h1 class="hero-title glitch">READY<br>FOR THE<br><span class="gradient-text">VIBE?</span></h1>
+    <div class="neon-line"></div>
+    <p class="subtitle">A special transmission is waiting for you...</p>
+    <button class="btn" onclick="go('birthday')">UNLOCK SURPRISE ↗</button>
+    <div class="footer">NEON MODE // ONLINE</div>
+  </div>
+</section>
+
+<!-- SCENE 2 -->
+<section class="scene" id="birthday">
+  <div class="content">
+    <div class="eyebrow">TODAY'S MAIN CHARACTER</div>
+    <h1 class="hero-title">HAPPY<br><span class="gradient-text">BIRTHDAY</span></h1>
+    <div class="photo-frame">
+      <img src="data:image/png;base64,PHOTO_DATA" alt="Birthday photo">
+    </div>
+    <h2 class="glitch" style="font-size:clamp(32px,9vw,58px);color:#ffb1db">GOLDI ♡</h2>
+    <span class="cake">🎂</span>
+    <p class="subtitle">TODAY, THE WHOLE UNIVERSE GLOWS FOR YOU.</p>
+    <button class="btn btn-cyan" onclick="burst();go('memories')">ENTER MEMORIES ✦</button>
+  </div>
+</section>
+
+<!-- SCENE 3 -->
+<section class="scene" id="memories">
+  <div class="content">
+    <div class="eyebrow">MEMORY DATABASE // 002</div>
+    <h1 class="hero-title" style="font-size:clamp(34px,9vw,65px)">OUR<br><span class="gradient-text">MOMENTS</span></h1>
+    <p class="subtitle">Tap each box and select a photo from your phone.</p>
+    <div class="photo-grid">
+      <label class="photo-slot">＋ PHOTO 01<input type="file" accept="image/*" onchange="preview(this)"></label>
+      <label class="photo-slot">＋ PHOTO 02<input type="file" accept="image/*" onchange="preview(this)"></label>
+      <label class="photo-slot">＋ PHOTO 03<input type="file" accept="image/*" onchange="preview(this)"></label>
+      <label class="photo-slot">＋ PHOTO 04<input type="file" accept="image/*" onchange="preview(this)"></label>
+      <label class="photo-slot">＋ PHOTO 05<input type="file" accept="image/*" onchange="preview(this)"></label>
+      <label class="photo-slot">＋ PHOTO 06<input type="file" accept="image/*" onchange="preview(this)"></label>
+    </div>
+    <p class="small">Photos selected here are previews; add them to the site files for a permanent shareable page.</p>
+    <button class="btn" onclick="burst();go('finale')">FINAL TRANSMISSION ♡</button>
+  </div>
+</section>
+
+<!-- SCENE 4 -->
+<section class="scene" id="finale">
+  <div class="content">
+    <div class="eyebrow">TRANSMISSION RECEIVED // 003</div>
+    <h1 class="hero-title glitch">STAY<br><span class="gradient-text">ICONIC</span></h1>
+    <div class="message-box">
+      <h2 style="color:#00f7ff">GOLDI, THIS IS YOUR DAY 💗</h2>
+      <p class="subtitle">May your life be full of good music, beautiful memories, real smiles and moments that feel like magic.</p>
+      <p class="subtitle">Keep shining. Keep being you. The world is brighter with you in it. ✨</p>
+    </div>
+    <div style="font-size:35px">💗 ⚡ 🎂 ⚡ 💗</div>
+    <button class="btn btn-cyan" onclick="burst();go('intro')">↻ REPLAY EXPERIENCE</button>
+    <div class="footer">END OF TRANSMISSION</div>
+  </div>
+</section>
+
+<script>
+// Scene navigation
+function go(id) {
+  document.querySelectorAll('.scene').forEach(scene => scene.classList.remove('active'));
+  const target = document.getElementById(id);
+  if (target) {
+    target.classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+    burst();
+  }
+}
+
+// Photo preview
+function preview(input) {
+  const file = input.files && input.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) return;
+  const reader = new FileReader();
+  reader.onload = event => {
+    const slot = input.parentElement;
+    let img = slot.querySelector('img');
+    if (!img) {
+      img = document.createElement('img');
+      img.alt = 'Selected memory';
+      slot.appendChild(img);
+    }
+    img.src = event.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// Floating hearts
+function heart() {
+  const el = document.createElement('div');
+  el.className = 'heart';
+  el.textContent = ['♡','♥','✦','💗'][Math.floor(Math.random()*4)];
+  el.style.left = Math.random()*100 + 'vw';
+  el.style.fontSize = (14 + Math.random()*23) + 'px';
+  el.style.color = Math.random() > .5 ? '#ff1493' : '#00f7ff';
+  el.style.textShadow = '0 0 15px currentColor';
+  el.style.animationDuration = (5 + Math.random()*6) + 's';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 12000);
+}
+setInterval(heart, 450);
+
+// Particle burst
+function burst() {
+  for (let i=0; i<35; i++) {
+    const el = document.createElement('div');
+    el.className = 'heart';
+    el.textContent = ['✦','✧','♥','⚡'][Math.floor(Math.random()*4)];
+    el.style.left = (35 + Math.random()*30) + 'vw';
+    el.style.bottom = (15 + Math.random()*30) + 'vh';
+    el.style.fontSize = (12 + Math.random()*22) + 'px';
+    el.style.color = Math.random() > .5 ? '#ff1493' : '#00f7ff';
+    el.style.animationDuration = (1.5 + Math.random()*2) + 's';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+}
+
+// Animated starfield
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+let stars = [];
+
+function resize() {
+  canvas.width = window.innerWidth * devicePixelRatio;
+  canvas.height = window.innerHeight * devicePixelRatio;
+  canvas.style.width = window.innerWidth + 'px';
+  canvas.style.height = window.innerHeight + 'px';
+  ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+  stars = Array.from({length:100}, () => ({
+    x:Math.random()*window.innerWidth,
+    y:Math.random()*window.innerHeight,
+    r:Math.random()*1.8,
+    a:Math.random()
+  }));
+}
+window.addEventListener('resize', resize);
+resize();
+
+function animateStars() {
+  ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+  stars.forEach(s => {
+    s.a += (Math.random()-.5)*.08;
+    s.a = Math.max(.15,Math.min(1,s.a));
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle = `rgba(0,247,255,${s.a})`;
+    ctx.shadowBlur = 9;
+    ctx.shadowColor = '#00f7ff';
+    ctx.fill();
+  });
+  requestAnimationFrame(animateStars);
+}
+animateStars();
+
+// Original synthesized bass beat using Web Audio.
+// No external/copyrighted track is included.
+let audioCtx = null;
+let beatTimer = null;
+let beatOn = false;
+let step = 0;
+
+function kick(time) {
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(120,time);
+  osc.frequency.exponentialRampToValueAtTime(42,time+.16);
+  gain.gain.setValueAtTime(.65,time);
+  gain.gain.exponentialRampToValueAtTime(.001,time+.22);
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.start(time);
+  osc.stop(time+.23);
+}
+
+function bass(time, freq) {
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = 'sawtooth';
+  osc.frequency.setValueAtTime(freq,time);
+  gain.gain.setValueAtTime(.09,time);
+  gain.gain.exponentialRampToValueAtTime(.001,time+.12);
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.start(time);
+  osc.stop(time+.13);
+}
+
+function tick() {
+  if (!beatOn || !audioCtx) return;
+  const t = audioCtx.currentTime + .02;
+  if (step % 4 === 0) kick(t);
+  if (step % 2 === 0) bass(t, step % 8 === 4 ? 55 : 42);
+  step++;
+}
+
+async function toggleMusic() {
+  const button = document.getElementById('musicBtn');
+  if (!audioCtx) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) {
+      button.textContent = 'AUDIO NOT SUPPORTED';
+      return;
+    }
+    audioCtx = new AudioContextClass();
+  }
+
+  if (audioCtx.state === 'suspended') await audioCtx.resume();
+
+  beatOn = !beatOn;
+  if (beatOn) {
+    tick();
+    beatTimer = setInterval(tick, 250);
+    button.textContent = '♫ STOP BEAT';
+    button.style.borderColor = '#00f7ff';
+  } else {
+    clearInterval(beatTimer);
+    button.textContent = '♫ START BEAT';
+    button.style.borderColor = '#ff1493';
+  }
+}
+</script>
+</body>
+</html>
